@@ -18,17 +18,17 @@ class ChatController {
     private final OllamaChatClient chatClient;
 
     @Autowired
-    public ChatController(OllamaChatClient chatClient) {
+    ChatController(OllamaChatClient chatClient) {
         this.chatClient = chatClient;
     }
 
     @GetMapping("/llama2/generate")
-    public Map generate(@RequestParam(value = "message", defaultValue = "Tell me a joke") String message) {
+    Map generate(@RequestParam(value = "message", defaultValue = "Tell me how to say thanks for attending my session and its time for questions") String message) {
         return Map.of("generation", chatClient.call(message));
     }
 
     @GetMapping("/llama2/generateStream")
-    public Flux<ChatResponse> generateStream(@RequestParam(value = "message", defaultValue = "Tell me a joke") String message) {
+    Flux<ChatResponse> generateStream(@RequestParam(value = "message", defaultValue = "Tell me a joke") String message) {
         Prompt prompt = new Prompt(new UserMessage(message));
         return chatClient.stream(prompt);
     }
