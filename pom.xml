@@ -5,7 +5,7 @@
   <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
-    <version>3.2.4</version>
+    <version>3.2.5</version>
     <relativePath></relativePath>
   </parent>
   <groupId>dev.dashaun.ai.ollama</groupId>
@@ -18,6 +18,11 @@
   </properties>
   <dependencyManagement>
     <dependencies>
+      <dependency>
+        <groupId>org.springframework.ai</groupId>
+        <artifactId>spring-ai-ollama-spring-boot-starter</artifactId>
+        <version>0.8.1</version>
+      </dependency>
       <dependency>
         <groupId>org.springframework.ai</groupId>
         <artifactId>spring-ai-bom</artifactId>
@@ -81,7 +86,10 @@
         </executions>
         <configuration>
           <image>
-            <builder>dashaun/builder:tiny</builder>
+            <buildpacks>
+              <buildpack>paketobuildpacks/java-native-image</buildpack>
+            </buildpacks>
+            <builder>paketobuildpacks/builder-jammy-buildpackless-tiny</builder>
             <createdDate>now</createdDate>
             <name>dashaun/${project.name}:v${project.version}-${os.detected.arch}</name>
           </image>
